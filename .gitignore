@@ -1,0 +1,7 @@
+build
+assets
+bin
+lib/imgui/*
+lib/imgui-sfml/*
+imgui.ini
+*.exe

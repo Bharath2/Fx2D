@@ -1,0 +1,48 @@
+scene_size: [20, 10]            # in x, y directions  
+background: ./assets/bg.png     # color or image_path
+
+physics:
+    max_time_step: 0.001  
+    real_time_factor: 1.0 
+    gravity: [0, -10]
+    # ground_elasticity:
+    # ground_friction:
+    # ground_z:
+ 
+
+entities:
+    body1:
+        pose: [6, 6, 0]                     # x, y, theta ; orientation in degrees
+        init_velocity:  [0, 0, 0]           # won't be used for child links
+        physics:
+            mass: 1
+            inertia: 1            # if not given will be calculated from visual geometry  
+            ext_forces: false     # boolean if false external forces do not effect except gravity
+            gravity_scale: 1.0    # scale gravity (float)
+            vel_damping: 0.0      # damping will be applied when the entity moves 
+            elasticity:  0.8      # 0 to 1 used in calculating coefficient of restitution
+            surface_friction: 0.2  # used in calculation of contact forces
+        visual:
+            pose: [0, 0, 0]       # relative to body frame
+            geometry: 
+                circle: 0.2             # circle, rectangle, polygon
+            texture: ./assets/ball.png  # color(RGBA) or image path
+            border_color: [0, 0, 0, 255] 
+        collision:
+            pose: [0, 0, 0]          # relative to body frame
+            geometry: 
+              circle: 0.2            # circle, rectangle, polygon
+
+# joints:
+#     joint1:
+#         type: revolute    # linear_x, linear_z
+#         parent: body1
+#         child: body2
+#         limits: []
+        
+
+
+
+            
+
+             
