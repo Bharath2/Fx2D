@@ -1,50 +1,73 @@
-#include "renderer.h"
-#include "physics.h"
+#include "Core.h"
+#include "Renderer.h"
+#include "YamlUtils.h"
+
+#include <iostream>
+#include <string>
 
 
-// fix green object does not move error
-// edit drawScene to change with shape
+// rewrite FxShape with inbuilt add_offset, get_bounds, and rotate. 
+// and also write sat_collision using vectorized ops
+// think about collison callback and step callback, provide as virtual override methods or as attributes
+
+
+
+// custom function is called every time step
+// void Fx_sceneloop(FxScene& scene, float dt){
+
+
+// }
+
+
 int main(int, char**){
-    Renderer renderer(1200, 800);
-    renderer.set_background("./assets/bg.png");
+    // FxVec2fArray a {{1.0f, 2.0f}, {1.2f, 2.3f}, {2.1f, 3.2f}};
+    // std::cout<< a << std::endl;
+    // std::cout<< -a*a << std::endl;
+    // std::cout<< a + 1 << std::endl;
+    // std::cout<< a + FxVec2f{1.0f, 2.0f} << std::endl;
+    // std::cout<< 1/a << std::endl;
 
-    FxScene scene({12.0f, 8.0f});
+
+
+    // FxScene scene({12.0f, 8.0f});
     
-    auto body1 = std::make_shared<FxEntity>("body1");
-    scene.add_entity(body1);
+    // auto body1 = std::make_shared<FxEntity>("body1");
+    // scene.add_entity(body1);
+    // body1->set_collision_geometry(0.5f);
+    // body1->set_init_velocity({1, 6, 0});
+    // // body1->visual_geometry()->set_fillTexture("./assets/ball.PNG");
 
-    auto body2 = std::make_shared<FxEntity>("body2");
-    body2->set_init_pose({600, 400, 0});
+    // auto body2 = std::make_shared<FxEntity>("body2");
+    // body2->set_init_pose({6, 4, 0});
 
-    FxVisualShape bshape;
-    bshape.set_fillColor(sf::Color::Green);
-    bshape.set_outlineColor(sf::Color::Black);
-    body2->set_visual(bshape);
+    // FxVisualShape bshape;
+    // body2->set_collision_geometry(0.5f);
+    // bshape.set_fillColor(sf::Color::Green);
+    // bshape.set_outlineColor(sf::Color::Black);
+    // body2->set_visual_geometry(bshape);
 
-    std::cout<<body2->gravity_scale<<std::endl;
 
-    scene.add_entity(body2);
+    // auto body3 = std::make_shared<FxEntity>("body3");
+    // body3->set_init_pose({6, 2, 0});
+    // scene.add_entity(body3);
+    // FxShape cshape(FxVec2f{0.5f, 0.5f});
+    // FxShape cshape2(FxVec2f{0.5f, 0.5f});
+    // body3->set_visual_geometry(cshape);
+    // body3->set_collision_geometry(cshape2);
+    // // body3->set_init_velocity({1, 6, 0});
 
-    auto bod3 = scene.get_entity("body2");
-    std::cout<<bod3->pos<<std::endl;
-    bod3->pos += FxVec2f {10, 10};
-    std::cout<<bod3->pos<<std::endl;
 
-    std::cout<<body2->pos<<std::endl;
-    // std::cout<<bod3->pos<<std::endl;
-    // body2->visual.def = sf::CircleShape(100.f)
+    // std::cout<<body2->gravity_scale<<std::endl;
 
-    //     sf::CircleShape shape(100.f);
-    // shape.setFillColor(sf::Color::Green);
-    // shape.setPosition(600.f, 450.f); // Draw the circle at (600,450)
-    // shape.setOutlineThickness(5.f);
-    // // Set the border (outline) color (e.g., black).
-    // shape.setOutlineColor(sf::Color::Black);
-    // m_window->draw(shape);
+    // scene.add_entity(body2);
+    // // scene.set_step_callback(Fx_sceneloop);
 
-    // auto bd = scene.get_entity("body1");
-   
-    renderer.run(scene);
+    // auto bod3 = scene.get_entity("body2");
+    auto scene = FxYAML::buildScene("./Scene.yml");
+
+    Renderer renderer(scene);
+    // renderer.set_background("./assets/bg.png");
+    renderer.run();
 
     return 0;
 }

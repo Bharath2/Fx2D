@@ -1,9 +1,8 @@
 # --- Compiler and Flags ---
 export PATH := /mingw64/bin:/usr/bin:/bin:$(PATH)
 
-
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra \
+CXXFLAGS := -std=c++20 -Wall -Wextra -o3 \
             -I./ \
             -Iinclude \
             -Ilib/imgui \
@@ -11,7 +10,7 @@ CXXFLAGS := -std=c++17 -Wall -Wextra \
             -I/mingw64/include/eigen3 \
 
 # --- Linker and Libraries ---
-LDFLAGS := -lsfml-window -lsfml-graphics -lsfml-system -lopengl32
+LDFLAGS := -lsfml-window -lsfml-graphics -lsfml-system -lopengl32 -lyaml-cpp
 
 # --- Files and Directories ---
 TARGET := Fx2D.exe
@@ -19,8 +18,10 @@ BUILD_DIR := build
 
 # Application's source files.
 APP_SRCS := src/main.cpp \
+            src/core.cpp \
 			src/renderer.cpp \
-			src/physics.cpp
+			src/yaml_utils.cpp \
+			
 
 # Define the ImGui core and backend source files.
 IMGUI_SRCS := lib/imgui/imgui.cpp \
@@ -64,5 +65,12 @@ clean:
 	@echo "Cleaning up..."
 	rm -f $(TARGET)
 	rm -rf $(BUILD_DIR)
+
+# --- Rebuild Target ---
+rebuild: clean all
+
+# --- Debug Build ---
+debug: CXXFLAGS += -g -DDEBUG
+debug: clean all
 
 .PHONY: all clean
